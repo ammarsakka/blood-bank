@@ -42,12 +42,12 @@ export const Hospital = ({ user }) => {
         <DataGrid
           columns={[
             { field: 'id', headerName: 'ID', flex: 0 },
-            { field: 'name', headerName: 'Name', flex: .5 },
-            { field: 'phone', headerName: 'Phone Number', flex: .5 },
+            { field: 'name', headerName: 'Name', flex: 1 },
+            { field: 'phone', headerName: 'Phone Number', flex: 1 },
             { field: 'email', headerName: 'Email', flex: 1 },
-            { field: 'location', headerName: 'Location', flex: 0.5 },
+            { field: 'location', headerName: 'Location', flex: 1 },
             {
-              field: 'action', headerName: '', renderCell: ({ id }) => {
+              field: 'action', headerName: '', flex: 1, renderCell: ({ id }) => {
                 return (
                   <>
                     <Button onClick={() => { handleEdit(id) }}>edit</Button>

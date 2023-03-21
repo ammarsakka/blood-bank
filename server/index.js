@@ -117,7 +117,63 @@ app.post('/hospital/update', (req, res) => {
 })
 
 app.post('/users/get', (req, res) => {
-  const query = `SELECT * FROM users ORDER BY id DESC`
+  const { user } = req.body
+
+  const query = `SELECT * FROM users WHERE id != '${user[0]?.id}' ORDER BY id DESC`
+  connect.query(query).then((result) => {
+    res.json(result)
+  })
+  connect.end()
+})
+
+app.post('/users/add', (req, res) => {
+  const { fullname, username, email, phone, pass } = req.body
+
+  const query = `INSERT INTO users (full_name, email, password, username, phone_number)
+  VALUES ('${fullname}', '${email}', '${pass}', '${username}', '${phone}')`
+
+  try {
+    connect.query(query).then((resutlt) => {
+      res.json({ status: 200, message: 'user created' })
+    }).catch((err) => {
+      res.json({ status: 500, message: 'this user already exist' })
+    })
+    connect.end()
+  } catch (error) {
+    res.json(error)
+  }
+})
+
+app.post('/users/edit', (req, res) => {
+  const { id } = req.body
+
+  const query = `SELECT * FROM users WHERE id = '${id}'`
+  connect.query(query).then((resutlt) => {
+    res.json(resutlt)
+  })
+  connect.end()
+})
+
+app.post('/users/update', (req, res) => {
+  const { fullname, username, email, phone, pass, status, id } = req.body
+
+  const query = `UPDATE users SET full_name = '${fullname}', email = '${email}', password = '${pass}', username = '${username}', phone_number = '${phone}', status = '${status}' WHERE id = '${id}'`
+
+  try {
+    connect.query(query).then((resutlt) => {
+      res.json({ status: 200, message: 'user created' })
+    }).catch((err) => {
+      res.json({ status: 500, message: 'this user already exist' })
+    })
+    connect.end()
+  } catch (error) {
+    res.json(error)
+  }
+})
+
+app.use('/users/delete', (req, res) => {
+  const { id } = req.body
+  const query = ` DELETE FROM users WHERE id = '${id}'`
   connect.query(query).then((result) => {
     res.json(result)
   })
