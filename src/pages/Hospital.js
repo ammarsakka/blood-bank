@@ -21,20 +21,22 @@ export const Hospital = ({ user }) => {
       setHospital(result.data)
     })
   }
-const handleEdit =(id) => {
-setId (id)
-setEdit(true)
-} 
-const handleDelete =(id) => {
-  setId (id)
-  setDelete(true)
-  } 
+
+  const handleEdit = (id) => {
+    setId(id)
+    setEdit(true)
+  }
+
+  const handleDelete = (id) => {
+    setId(id)
+    setDelete(true)
+  }
+
   useMemo(handlehospital, [user])
 
   return (
     <div>
       <Header user={user} />
-
       <div className='p-4'>
         <Button onClick={() => { setAdd(true) }}>add new</Button>
         <DataGrid
@@ -46,25 +48,23 @@ const handleDelete =(id) => {
             { field: 'location', headerName: 'Location', flex: 0.5 },
             {
               field: 'action', headerName: '', renderCell: ({ id }) => {
-                return(
+                return (
                   <>
-                  <Button onClick={()=> {handleEdit(id)}}>edit</Button>
-                  <Button onClick={()=> {handleDelete(id)}}>Delete</Button>
-</>
+                    <Button onClick={() => { handleEdit(id) }}>edit</Button>
+                    <Button onClick={() => { handleDelete(id) }}>Delete</Button>
+                  </>
                 )
               }
             }
           ]}
-
           rows={hospital}
           sx={{ width: '100%', height: '100%', minHeight: '70vh' }}
         />
       </div>
-      <AddNewHospital isOpen={isAdd} setOpen={setAdd} reload={handlehospital} 
+      <AddNewHospital isOpen={isAdd} setOpen={setAdd} reload={handlehospital}
       />
       <EditHospital isOpen={isEdit} setOpen={setEdit} reload={handlehospital} hospital={isId} />
       <Delete isOpen={isDelete} setOpen={setDelete} reload={handlehospital} id={isId} url='/hospital/delete' />
     </div>
-
   )
 }

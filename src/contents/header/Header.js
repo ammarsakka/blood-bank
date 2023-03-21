@@ -4,7 +4,7 @@ import { Changepassword } from '../popup/ChangePassword'
 
 export const Header = ({ user = [] }) => {
   const [isOpen, setOpen] = useState(false)
-  const[ispassword, setpassword] = useState(false)
+  const [ispassword, setpassword] = useState(false)
 
 
   return (
@@ -53,18 +53,27 @@ export const Header = ({ user = [] }) => {
                       <ul className={`absolute z-50 top-full right-0 bg-gray-100 text-black p-4 rounded shadow whitespace-nowrap flex-col gap-4 ${isOpen ? 'flex' : 'hidden'}`}>
                         {
                           item.role === 'admin' &&
-                          <li>
-                            <Link to={'/hospital'}>
-                              <button>
-                                Hospital
-                              </button>
-                            </Link>
-                          </li>
+                          <>
+                            <li>
+                              <Link to={'/hospital'}>
+                                <button>
+                                  Hospital
+                                </button>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link to={'/users'}>
+                                <button>
+                                  Users
+                                </button>
+                              </Link>
+                            </li>
+                          </>
                         }
                         <li >
-                            <button onClick={() => {setpassword(true)}}>
-                              Change Password 
-                            </button>
+                          <button onClick={() => { setpassword(true) }}>
+                            Change Password
+                          </button>
                         </li>
                         <li >
                           <Link to={'/signout'}>
@@ -81,7 +90,7 @@ export const Header = ({ user = [] }) => {
           </ul>
         </div>
       </div>
-      <Changepassword isOpen={ispassword} setOpen={setpassword}/> 
+      <Changepassword isOpen={ispassword} setOpen={setpassword} />
     </div>
   )
 }

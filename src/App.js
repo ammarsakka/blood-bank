@@ -5,6 +5,7 @@ import { Hospital } from './pages/Hospital'
 import { Register } from './pages/Register'
 import { Signin } from './pages/Signin'
 import { Signout } from './pages/Signout'
+import { Users } from './pages/Users'
 
 export const App = () => {
   const [user, setUser] = useState(() => {
@@ -23,6 +24,7 @@ export const App = () => {
         <Route path='/signin' element={<Signin user={user} setUser={setUser} />} />
         <Route path='/signout' element={<Signout user={user} setUser={setUser} />} />
         <Route path='/hospital' element={<Hospital user={user} />} />
+        <Route path='/users' element={<Users user={user} />} />
       </Routes>
     </BrowserRouter>
   )

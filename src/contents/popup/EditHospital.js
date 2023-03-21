@@ -43,12 +43,12 @@ export const EditHospital = ({ isOpen, setOpen, reload, hospital }) => {
   }
   return (
     <Module isOpen={isOpen} setOpen={setOpen} submit={submit}>
-      <div className='flex flex-col gap-4 w-full'>
+      <form className='flex flex-col gap-4 w-full'>
         <TextField label='Name' onChange={(e) => { setName(e.target.value) }} value={name} />
-        <TextField label='Phone Number' onChange={(e) => { setPhone(e.target.value) }} value={phone} />
-        <TextField label='Email' onChange={(e) => { setEmail(e.target.value) }} value={email} />
+        <TextField label='Phone Number' onChange={(e) => { setPhone(e.target.value) }} value={phone} type='tel' />
+        <TextField label='Email' onChange={(e) => { setEmail(e.target.value) }} value={email} type='email' />
         <TextField label='Location' onChange={(e) => { setLocation(e.target.value) }} value={location} />
-      </div>
+      </form>
     </Module>
   )
 }
