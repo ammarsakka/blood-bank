@@ -39,9 +39,7 @@ export const AppointmentForm = ({ user }) => {
             if (hospital && date && gender && age && weight && bloodType) {
                 axios.post(`${URL_API}/appointment/set`, { hospital, date, user, gender, age, weight, bloodType, note }).then((result) => {
                     if (result.data.status === 200) {
-                        setHospital('')
-                        setDate('')
-
+                        navigate('/users/appointments')
                     }
                     else
                         setError(result.data.message)

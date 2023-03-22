@@ -183,10 +183,52 @@ app.use('/users/delete', (req, res) => {
 app.post('/appointment/set', (req, res) => {
   const { hospital, date, user, gender, age, weight, bloodType, note } = req.body
 
-  if (hospital && date && time && gender && age && weight && bloodType) {
+  if (hospital && date && gender && age && weight && bloodType) {
     const query = `INSERT INTO donor (gender, age, weight, blood_type, hospital_id, user_id, date_donation, note, status) VALUES ('${gender}', '${age}', '${weight}', '${bloodType}', '${hospital}', '${user[0]?.id}', '${date}', '${note}', 'pending')`
+    try {
+      connect.query(query).then((result) => {
+        res.json({ status: 200, message: result })
+      }).catch((err) => {
+        res.json({ status: 400, message: 'this user already exist' })
+      })
+      connect.end()
+    } catch (error) {
+      res.json({ status: 400, message: error })
+    }
   } else
     res.json({ status: 400, message: 'All fields are required' })
+})
+
+app.post('/appointments/get/user', (req, res) => {
+  const { user } = req.body
+
+
+  const query = `SELECT donor.id, donor.gender, donor.age, donor.weight, donor.blood_type, donor.date_donation, donor.status, hospital.name FROM donor LEFT JOIN hospital ON hospital.id = donor.hospital_id WHERE donor.user_id = '${user[0]?.id}' ORDER BY donor.id DESC`
+
+  connect.query(query).then((result) => {
+    res.json(result)
+  })
+  connect.end()
+})
+
+app.post('/appointments/get/all', (req, res) => {
+  const query = `SELECT donor.id, donor.gender, donor.age, donor.weight, donor.blood_type, donor.date_donation, donor.status, hospital.name, users.full_name FROM donor LEFT JOIN hospital ON hospital.id = donor.hospital_id LEFT JOIN users ON users.id = donor.user_id ORDER BY donor.id DESC`
+
+  connect.query(query).then((result) => {
+    res.json(result)
+  })
+  connect.end()
+})
+
+app.post('/appointments/update', (req, res) => {
+  const { select } = req.body
+
+  const query = `UPDATE donor SET status = 'completed' WHERE id IN (${select.join(',')})`
+
+  connect.query(query).then((result) => {
+    res.json(result)
+  })
+  connect.end()
 })
 
 app.use('/', (req, res) => {

@@ -1,3 +1,4 @@
+import { Divider } from '@mui/material'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Changepassword } from '../popup/ChangePassword'
@@ -68,16 +69,32 @@ export const Header = ({ user = [] }) => {
                                 </button>
                               </Link>
                             </li>
+                            <li>
+                              <Link to={'/admin/appointments'}>
+                                <button>
+                                  All Appointments
+                                </button>
+                              </Link>
+                            </li>
                           </>
                         }
+                        <li>
+                          <Link to={'/users/appointments'}>
+                            <button>
+                              Users Appointments
+                            </button>
+                          </Link>
+                        </li>
+                        <Divider />
                         <li >
                           <button onClick={() => { setpassword(true) }}>
                             Change Password
                           </button>
                         </li>
+                        <Divider />
                         <li >
                           <Link to={'/signout'}>
-                            <button>
+                            <button className='text-red-500'>
                               Sign Out
                             </button>
                           </Link>
