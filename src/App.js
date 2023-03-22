@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Appointment } from './pages/Appointment'
 import { Home } from './pages/Home'
 import { Hospital } from './pages/Hospital'
 import { Register } from './pages/Register'
@@ -25,6 +26,7 @@ export const App = () => {
         <Route path='/signout' element={<Signout user={user} setUser={setUser} />} />
         <Route path='/hospital' element={<Hospital user={user} />} />
         <Route path='/users' element={<Users user={user} />} />
+        <Route path='/appointment' element={<Appointment user={user} />} />
       </Routes>
     </BrowserRouter>
   )

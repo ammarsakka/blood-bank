@@ -1,5 +1,6 @@
 import React from 'react'
 import {Button} from '@mui/material'
+import { Link } from 'react-router-dom'
 export const Hero = () => {
   return (
     
@@ -14,10 +15,7 @@ export const Hero = () => {
           We are here for your Blood 
           </p>
 
-          <Button variant='contained'>Make an appointment</Button>
-
-
-          
+          <Link to={'/appointment'}><Button variant='contained'>Make an appointment</Button></Link>
         </div>
       </div>
     

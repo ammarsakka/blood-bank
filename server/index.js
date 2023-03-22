@@ -180,6 +180,15 @@ app.use('/users/delete', (req, res) => {
   connect.end()
 })
 
+app.post('/appointment/set', (req, res) => {
+  const { hospital, date, user, gender, age, weight, bloodType, note } = req.body
+
+  if (hospital && date && time && gender && age && weight && bloodType) {
+    const query = `INSERT INTO donor (gender, age, weight, blood_type, hospital_id, user_id, date_donation, note, status) VALUES ('${gender}', '${age}', '${weight}', '${bloodType}', '${hospital}', '${user[0]?.id}', '${date}', '${note}', 'pending')`
+  } else
+    res.json({ status: 400, message: 'All fields are required' })
+})
+
 app.use('/', (req, res) => {
   res.send('Hello')
 })
