@@ -231,6 +231,57 @@ app.post('/appointments/update', (req, res) => {
   connect.end()
 })
 
+app.post('/request/set', (req, res) => {
+  const { hospital, date, user, bloodType, note } = req.body
+
+  if (hospital && date && bloodType) {
+    const query = `INSERT INTO request (blood_type, hospital_id, user_id, date_request, notes, status) VALUES ('${bloodType}', '${hospital}', '${user[0]?.id}', '${date}', '${note}', 'pending')`
+    try {
+      connect.query(query).then((result) => {
+        res.json({ status: 200, message: result })
+      }).catch((err) => {
+        res.json({ status: 400, message: 'this user already exist' })
+      })
+      connect.end()
+    } catch (error) {
+      res.json({ status: 400, message: error })
+    }
+  } else
+    res.json({ status: 400, message: 'All fields are required' })
+})
+
+app.post('/requests/get/user', (req, res) => {
+  const { user } = req.body
+
+
+  const query = `SELECT request.id, request.blood_type, request.date_request, request.status, hospital.name FROM request LEFT JOIN hospital ON hospital.id = request.hospital_id WHERE request.user_id = '${user[0]?.id}' ORDER BY request.id DESC`
+
+  connect.query(query).then((result) => {
+    res.json(result)
+  })
+  connect.end()
+})
+
+app.post('/requests/get/all', (req, res) => {
+  const query = `SELECT request.id, request.blood_type, request.date_request, request.status, hospital.name, users.full_name FROM request LEFT JOIN hospital ON hospital.id = request.hospital_id LEFT JOIN users ON users.id = request.user_id ORDER BY request.id DESC`
+
+  connect.query(query).then((result) => {
+    res.json(result)
+  })
+  connect.end()
+})
+
+app.post('/requests/update', (req, res) => {
+  const { select } = req.body
+
+  const query = `UPDATE request SET status = 'approved' WHERE id IN (${select.join(',')})`
+
+  connect.query(query).then((result) => {
+    res.json(result)
+  })
+  connect.end()
+})
+
 app.use('/', (req, res) => {
   res.send('Hello')
 })
